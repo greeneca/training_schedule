@@ -20,47 +20,37 @@ require 'spec_helper'
 
 describe PhasesController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Phase. As you add validations to Phase, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # PhasesController. Be sure to keep this updated too.
-  def valid_session
-    {}
+  before(:each) do
+    @site = FactoryGirl.build(:phase)
   end
 
   describe "GET index" do
     it "assigns all phases as @phases" do
-      phase = Phase.create! valid_attributes
-      get :index, {}, valid_session
+      phase = Phase.create! @site.params
+      get :index, {}
       assigns(:phases).should eq([phase])
     end
   end
 
   describe "GET show" do
     it "assigns the requested phase as @phase" do
-      phase = Phase.create! valid_attributes
-      get :show, {:id => phase.to_param}, valid_session
+      phase = Phase.create! @site.params
+      get :show, {:id => phase.to_param}
       assigns(:phase).should eq(phase)
     end
   end
 
   describe "GET new" do
     it "assigns a new phase as @phase" do
-      get :new, {}, valid_session
+      get :new, {}
       assigns(:phase).should be_a_new(Phase)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested phase as @phase" do
-      phase = Phase.create! valid_attributes
-      get :edit, {:id => phase.to_param}, valid_session
+      phase = Phase.create! @site.params
+      get :edit, {:id => phase.to_param}
       assigns(:phase).should eq(phase)
     end
   end
@@ -69,18 +59,18 @@ describe PhasesController do
     describe "with valid params" do
       it "creates a new Phase" do
         expect {
-          post :create, {:phase => valid_attributes}, valid_session
+          post :create, {:phase => @site.params}
         }.to change(Phase, :count).by(1)
       end
 
       it "assigns a newly created phase as @phase" do
-        post :create, {:phase => valid_attributes}, valid_session
+        post :create, {:phase => @site.params}
         assigns(:phase).should be_a(Phase)
         assigns(:phase).should be_persisted
       end
 
       it "redirects to the created phase" do
-        post :create, {:phase => valid_attributes}, valid_session
+        post :create, {:phase => @site.params}
         response.should redirect_to(Phase.last)
       end
     end
@@ -89,14 +79,14 @@ describe PhasesController do
       it "assigns a newly created but unsaved phase as @phase" do
         # Trigger the behavior that occurs when invalid params are submitted
         Phase.any_instance.stub(:save).and_return(false)
-        post :create, {:phase => {}}, valid_session
+        post :create, {:phase => {}}
         assigns(:phase).should be_a_new(Phase)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Phase.any_instance.stub(:save).and_return(false)
-        post :create, {:phase => {}}, valid_session
+        post :create, {:phase => {}}
         response.should render_template("new")
       end
     end
@@ -105,42 +95,42 @@ describe PhasesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested phase" do
-        phase = Phase.create! valid_attributes
+        phase = Phase.create! @site.params
         # Assuming there are no other phases in the database, this
         # specifies that the Phase created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Phase.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => phase.to_param, :phase => {'these' => 'params'}}, valid_session
+        put :update, {:id => phase.to_param, :phase => {'these' => 'params'}}
       end
 
       it "assigns the requested phase as @phase" do
-        phase = Phase.create! valid_attributes
-        put :update, {:id => phase.to_param, :phase => valid_attributes}, valid_session
+        phase = Phase.create! @site.params
+        put :update, {:id => phase.to_param, :phase => @site.params}
         assigns(:phase).should eq(phase)
       end
 
       it "redirects to the phase" do
-        phase = Phase.create! valid_attributes
-        put :update, {:id => phase.to_param, :phase => valid_attributes}, valid_session
+        phase = Phase.create! @site.params
+        put :update, {:id => phase.to_param, :phase => @site.params}
         response.should redirect_to(phase)
       end
     end
 
     describe "with invalid params" do
       it "assigns the phase as @phase" do
-        phase = Phase.create! valid_attributes
+        phase = Phase.create! @site.params
         # Trigger the behavior that occurs when invalid params are submitted
         Phase.any_instance.stub(:save).and_return(false)
-        put :update, {:id => phase.to_param, :phase => {}}, valid_session
+        put :update, {:id => phase.to_param, :phase => {}}
         assigns(:phase).should eq(phase)
       end
 
       it "re-renders the 'edit' template" do
-        phase = Phase.create! valid_attributes
+        phase = Phase.create! @site.params
         # Trigger the behavior that occurs when invalid params are submitted
         Phase.any_instance.stub(:save).and_return(false)
-        put :update, {:id => phase.to_param, :phase => {}}, valid_session
+        put :update, {:id => phase.to_param, :phase => {}}
         response.should render_template("edit")
       end
     end
@@ -148,15 +138,15 @@ describe PhasesController do
 
   describe "DELETE destroy" do
     it "destroys the requested phase" do
-      phase = Phase.create! valid_attributes
+      phase = Phase.create! @site.params
       expect {
-        delete :destroy, {:id => phase.to_param}, valid_session
+        delete :destroy, {:id => phase.to_param}
       }.to change(Phase, :count).by(-1)
     end
 
     it "redirects to the phases list" do
-      phase = Phase.create! valid_attributes
-      delete :destroy, {:id => phase.to_param}, valid_session
+      phase = Phase.create! @site.params
+      delete :destroy, {:id => phase.to_param}
       response.should redirect_to(phases_url)
     end
   end

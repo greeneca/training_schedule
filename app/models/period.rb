@@ -3,15 +3,18 @@ class Period
   field :number
   field :instructor
   field :location
-  field :date, type: DateTime
 
-  belongs_to :phase, inverse_of: :periods
+  belongs_to :week
 
   validates_presence_of :number
-  validates_presence_of :instructor
-  validates_presence_of :location
-  validates_presence_of :date
 
   validates_uniqueness_of :number
 
+  def params
+    params = {
+      :number => self.number,
+      :instructor => self.instructor,
+      :location => self.location,
+    }
+  end
 end

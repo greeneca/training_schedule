@@ -1,6 +1,48 @@
 %p#notice= notice
 
+.info
+  .label
+    = @phase.name
+  .label
+    Officer:
+    = @phase.officer
 
-= link_to 'Edit', edit_phase_path(@phase)
-\|
-= link_to 'Back', phases_path
+.phase
+  - for week in @phase.weeks do
+    .week
+      .date
+        = week.date
+      .period
+        .label
+          Class:
+          = week.period1.number
+        .label
+          Instructor:
+          = week.period1.instructor
+        .label
+          Location:
+          = week.period1.location
+      .period
+        .label
+          Class:
+          = week.period2.number
+        .label
+          Instructor:
+          = week.period2.instructor
+        .label
+          Location:
+          = week.period2.location
+      .period
+        .label
+          Class:
+          = week.period3.number
+        .label
+          Instructor:
+          = week.period3.instructor
+        .label
+          Location:
+          = week.period3.location
+.links
+  = link_to 'Edit', edit_phase_path(@phase)
+  \|
+  = link_to 'Back', phases_path
